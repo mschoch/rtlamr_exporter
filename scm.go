@@ -39,6 +39,6 @@ type StandardConsumptionMsgMessage struct {
 	Type        int
 	TamperPhy   int
 	TamperEnd   int
-	Consumption int
+	Consumption float64
 	ChecksumVal int
 }

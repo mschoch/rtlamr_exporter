@@ -51,7 +51,7 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 	text, err := reader.ReadString('\n')
-	var last int
+	var last float64
 	for err == nil {
 		var scm StandardConsumptionMsg
 		jsonErr := json.Unmarshal([]byte(text), &scm)
@@ -59,11 +59,12 @@ func main() {
 			text, err = reader.ReadString('\n')
 			continue
 		}
-		diff := scm.Message.Consumption - last
+		kwh := scm.Message.Consumption / 100
+		diff := kwh - last
 		if diff > 0 {
 			// dont allow backwards
-			powerConsumed.Add(float64(diff))
-			last = scm.Message.Consumption
+			powerConsumed.Add(diff)
+			last = kwh
 		}
 		text, err = reader.ReadString('\n')
 	}
