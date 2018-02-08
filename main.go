@@ -42,7 +42,7 @@ func init() {
 }
 
 func main() {
-	// powerConsumed.
+	flag.Parse()
 
 	// The Handler function provides a default handler to expose metrics
 	// via an HTTP server. "/metrics" is the usual endpoint for that.
