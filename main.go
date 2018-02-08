@@ -17,12 +17,15 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"flag"
 	"net/http"
 	"os"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+var bindAddr = flag.String("addr", ":9415", "http listen address")
 
 var (
 	powerConsumed = prometheus.NewCounter(
@@ -44,7 +47,7 @@ func main() {
 	// The Handler function provides a default handler to expose metrics
 	// via an HTTP server. "/metrics" is the usual endpoint for that.
 	http.Handle("/metrics", promhttp.Handler())
-	go http.ListenAndServe(":8080", nil)
+	go http.ListenAndServe(*bindAddr, nil)
 
 	reader := bufio.NewReader(os.Stdin)
 	text, err := reader.ReadString('\n')
